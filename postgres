@@ -60,4 +60,30 @@ $BODY$
   EXECUTE PROCEDURE auto_insert_into_face_ret('cjsj');
 
 
-
+##远程视图
+--表名：车辆
+--组件名：资源目录服务
+CREATE VIEW v_car AS 
+select * from dblink('hostaddr=127.0.0.1 port=5432 dbname=postgres user=postgres password=postgres','select * from tb_car')
+AS tb_car (
+	car_id varchar(48),
+	car_index_code varchar(48),
+	plate_no varchar(64),
+	plate_color int4,
+	plate_type int4,
+	car_color int4,
+	car_type int4,
+	car_desc varchar(256),
+	person_index_code varchar(48),
+	create_time timestamptz(6),
+	update_time timestamptz(6),
+	creator varchar(64),
+	mender varchar(64),
+	extended_attribute jsonb,
+	status int4,
+	third_car_code varchar(64),
+	region_index_code varchar(48),
+	data_no varchar(48),
+	data_from varchar(48)
+	);
+select * from v_car;
